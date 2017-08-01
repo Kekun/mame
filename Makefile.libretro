@@ -12,6 +12,11 @@ TARGET ?= mame
 PYTHON_EXECUTABLE ?= python2
 REGENIE ?= 1
 
+prefix := /usr
+libdir := $(prefix)/lib
+
+LIBRETRO_DIR := libretro
+
 ###########################################################################
 #
 #   LIBRETRO PLATFORM GUESSING
@@ -180,4 +185,10 @@ vs2015:
 clean:
 	$(MAKE) $(BUILDFLAGS) $(PLATFLAGS) $(TARGETFLAGS) clean
 
-.PHONY: all build clean vs2015
+install:
+	install -D -m 755 $(TARGET) $(DESTDIR)$(libdir)/$(LIBRETRO_DIR)/$(TARGET)
+
+uninstall:
+	rm $(DESTDIR)$(libdir)/$(LIBRETRO_DIR)/$(TARGET)
+
+.PHONY: all build clean install vs2015 uninstall
